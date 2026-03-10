@@ -1,73 +1,149 @@
-# React + TypeScript + Vite
+# @widget-js/react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React hooks and components for building widgets in the widget-js ecosystem. This library provides a comprehensive set of tools to interact with the widget system, manage window states, and handle system events.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install @widget-js/react @widget-js/core
+# or
+yarn add @widget-js/react @widget-js/core
+# or
+pnpm add @widget-js/react @widget-js/core
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Window Management**: Control window size, position, and animations easily.
+- **System Integration**: Interact with system tray, notifications, and shortcuts.
+- **Widget Lifecycle**: Access widget instances, parameters, and storage.
+- **Event Handling**: Simplified hooks for keyboard, mouse, and IPC events.
+- **UI Components**: Ready-to-use components like `WindowControls`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Usage
+
+### Components
+
+#### WindowControls
+
+A pre-built component for window control buttons (close, minimize, etc.).
+
+```tsx
+import { WindowControls } from '@widget-js/react'
+import '@widget-js/react/style.css' // Import styles
+
+function App() {
+  return (
+    <div className="relative">
+      <WindowControls />
+      <div className="p-4">
+        <h1>My Widget</h1>
+      </div>
+    </div>
+  )
+}
 ```
+
+### Hooks
+
+#### useWidget
+
+Access the current widget instance to perform core operations.
+
+```tsx
+import { useWidget } from '@widget-js/react'
+
+function MyComponent() {
+  const widget = useWidget()
+
+  const refreshWidget = () => {
+    widget?.reload()
+  }
+
+  return <button onClick={refreshWidget}>Reload</button>
+}
+```
+
+#### useWindowAnimation
+
+Animate the widget window position with spring physics or easing functions.
+
+```tsx
+import { useWindowAnimationY } from '@widget-js/react'
+
+function AnimatedComponent() {
+  const { animate, isPlaying } = useWindowAnimationY({
+    spring: { stiffness: 100, damping: 20 },
+    onComplete: () => console.log('Animation complete'),
+  })
+
+  return (
+    <button onClick={() => animate(200)} disabled={isPlaying}>
+      Move to Y=200
+    </button>
+  )
+}
+```
+
+#### useIpcListener
+
+Listen for Inter-Process Communication (IPC) messages from the main process.
+
+```tsx
+import { useIpcListener } from '@widget-js/react'
+
+function ListenerComponent() {
+  useIpcListener('custom-event', (event, data) => {
+    console.log('Received data:', data)
+  })
+
+  return <div>Listening for events...</div>
+}
+```
+
+#### useWidgetStorage
+
+Persist data easily using the widget's storage system.
+
+```tsx
+import { useWidgetStorage } from '@widget-js/react'
+
+function StorageComponent() {
+  const [value, setValue] = useWidgetStorage('my-key', 'default-value')
+
+  return (
+    <input
+      value={value}
+      onChange={e => setValue(e.target.value)}
+    />
+  )
+}
+```
+
+## API Reference
+
+### Hooks
+
+| Hook | Description |
+|------|-------------|
+| `useWidget` | Get the current widget instance. |
+| `useWidgetParams` | Access widget URL parameters. |
+| `useWidgetStorage` | Persist state in widget storage. |
+| `useWindowSize` | Get or set window size. |
+| `useWindowAnimation` | Animate window position (X or Y). |
+| `useAutoHideOnEdge` | Automatically hide window when moving to screen edge. |
+| `useTray` | Manage system tray icon and menu. |
+| `useNotification` | Send system notifications. |
+| `useIpcListener` | Listen for IPC messages. |
+| `useShortcutListener` | Listen for global shortcuts. |
+| `useKeyboardEvent` | Listen for keyboard events. |
+| `useMouseEvent` | Listen for mouse events. |
+
+### Components
+
+- **WindowControls**: Standard window control buttons.
+- **Button**: Styled button component.
+
+## License
+
+MIT
