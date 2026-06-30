@@ -1,6 +1,11 @@
 import './index.css'
 
 export * from './components/ui/button'
+export * from './components/overlap-widget-wrapper'
+export * from './components/widget-background'
+export * from './components/widget-fit-box'
+export * from './components/widget-overlap-drag-button'
+export * from './components/widget-wrapper'
 export * from './components/window-controls'
 export * from './hooks'
 export { cn } from './lib/utils'

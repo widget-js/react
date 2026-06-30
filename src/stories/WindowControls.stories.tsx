@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { WindowControls } from '../components/window-controls'
 
 const meta = {
@@ -14,7 +14,7 @@ const meta = {
     close: { control: 'boolean' },
   },
   decorators: [
-    Story => (
+    (Story) => (
       <div className="relative w-full h-64 bg-slate-100 dark:bg-slate-800 p-4">
         <p className="text-sm text-muted-foreground">
           Window controls will appear in the top-right corner of this container (if fixed positioning allows) or the viewport.

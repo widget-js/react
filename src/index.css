@@ -1,0 +1,131 @@
+:root{
+  --widget-outer-padding: 12px;
+  --widget-outer-shadow-color: rgba(0, 0, 0, 0.2);
+  --widget-inner-width: calc(100vw - var(--widget-outer-padding) * 2);
+  --widget-inner-height: calc(100vh - var(--widget-outer-padding) * 2);
+}
+
+.widget-window{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.widget-drag-region{
+  app-region: drag;
+  user-select: none;
+}
+
+.widget-no-drag-region{
+  app-region: no-drag;
+}
+
+.widget-wrapper{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0px 0px 6px var(--widget-shadow-color, var(--widget-outer-shadow-color)));
+  overflow: hidden;
+}
+
+.widget-wrapper .widget-root{
+  width: var(--widget-inner-width);
+  height: var(--widget-inner-height);
+  transition: all 0.2s ease-out;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.widget-wrapper.editing{
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.widget-wrapper.editing > :first-child{
+  transform: scale(0.8);
+}
+
+.widget-w-full{
+  width: var(--widget-inner-width);
+}
+
+.widget-h-full{
+  height: var(--widget-inner-height);
+}
+
+.widget-background-stack{
+  border-radius: var(--widget-border-radius);
+  overflow: hidden;
+  position: absolute;
+  width: var(--widget-inner-width);
+  height: var(--widget-inner-height);
+  z-index: -1;
+}
+
+.widget-background,
+.widget-background-mask{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--widget-inner-width);
+  height: var(--widget-inner-height);
+  border-radius: var(--widget-border-radius);
+  overflow: hidden;
+  transition: all 0.2s ease-out;
+}
+
+.widget-background{
+  z-index: -3;
+  background-image: var(--widget-wallpaper);
+  border-radius: var(--widget-border-radius);
+  background-position: calc(var(--widget-outer-padding) * -1);
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+}
+
+.editing > .widget-background-stack > .widget-background{
+  background-image: none;
+}
+
+.editing > .widget-background-stack > .widget-background-mask{
+  transform: scale(0.8);
+}
+
+.widget-background-mask{
+  z-index: -2;
+  background-color: var(--widget-background-color);
+  border: var(--widget-background-border,1px solid var(--widget-background-border-color,hsla(0,0%,100%,.06)));
+  box-shadow: var(--widget-backgroun-box-shadow,inset 0 1px 0 0 var(--widget-background-box-shadow-color,hsla(0, 0%, 100%, 0.1)));
+  backdrop-filter: blur(var(--widget-wallpaper-blur,16px));
+}
+
+.widget-click-mask{
+  z-index: 9999;
+  width: 100vw;
+  height: 100vw;
+  position: absolute;
+}
+
+.widget-fit-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlap-drag-button{
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.54);
+  border-radius: 4px;
+  cursor: move;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
