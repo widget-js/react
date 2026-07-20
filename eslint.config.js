@@ -12,6 +12,7 @@ export default antfu({
   yaml: false,
   ignores: [
     '**/fixtures',
+    '**/components/ui/**',
   ],
   rules: {
     'curly': ['error', 'multi-line'],

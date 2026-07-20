@@ -1,0 +1,55 @@
+{
+  "name": "cn.example.widget",
+  "version": "0.1.0",
+  "author": "修改成你的信息",
+  "homepage": "",
+  "title": {
+    "zh-CN": "修改成你的组件标题"
+  },
+  "description": {
+    "zh-CN": "修改成你的组件描述"
+  },
+  "entry": "/",
+  "remote": {
+    "base": "/",
+    "hostname": "修改成你的域名",
+    "hash": true
+  },
+  "hash": true,
+  "url": "",
+  "widgets": [
+    {
+      "name": "cn.example.widget.clock",
+      "title": {
+        "zh-CN": "时钟"
+      },
+      "description": {
+        "zh-CN": "Hello world!"
+      },
+      "keywords": [
+        "recommend"
+      ],
+      "security": false,
+      "permissions": [],
+      "lang": "zh-CN",
+      "width": 3,
+      "height": 3,
+      "maxWidth": 6,
+      "webviewTag": false,
+      "maxHeight": 6,
+      "minWidth": 2,
+      "minHeight": 2,
+      "movable": true,
+      "singleton": false,
+      "resizable": true,
+      "path": "/widget/clock",
+      "meta": {},
+      "backgroundThrottling": true,
+      "previewImage": "/preview_clock.png",
+      "supportDeployMode": 17,
+      "configPagePath": "/widget/config/clock?frame=true&transparent=false&width=600&height=700",
+      "routes": []
+    }
+  ],
+  "pages": []
+}

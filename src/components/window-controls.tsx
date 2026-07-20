@@ -1,14 +1,102 @@
 import { BrowserWindowApi } from '@widget-js/core'
 import { Minus, Square, X } from 'lucide-react'
-import './window-controls.css'
+import styled, { css } from 'styled-components'
+
+const Root = styled.div<{ $floating: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ${({ $floating }) =>
+    $floating
+      ? css`
+          position: fixed;
+          top: 16px;
+          right: 16px;
+          z-index: 50;
+        `
+      : ''}
+`
+
+const iconSize = {
+  minimize: 12,
+  maximize: 10,
+  close: 12,
+} as const
+
+const ControlButton = styled.button<{ $variant: keyof typeof iconSize }>`
+  appearance: none;
+  app-region: no-drag;
+  -webkit-appearance: none;
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  color: white;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  line-height: 1;
+
+  ${({ $variant }) => {
+    switch ($variant) {
+      case 'minimize':
+        return css`
+          background-color: #eab308;
+
+          &:hover {
+            background-color: #ca8a04;
+            box-shadow: 0 0 8px rgba(234, 179, 8, 0.6);
+          }
+        `
+      case 'maximize':
+        return css`
+          background-color: #22c55e;
+
+          &:hover {
+            background-color: #16a34a;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+          }
+        `
+      case 'close':
+        return css`
+          background-color: #ed4f4a;
+
+          &:hover {
+            background-color: #dc2626;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+          }
+        `
+    }
+  }}
+
+  & svg {
+    width: ${({ $variant }) => `${iconSize[$variant]}px`};
+    height: ${({ $variant }) => `${iconSize[$variant]}px`};
+    stroke-width: 2;
+  }
+`
 
 export interface WindowControlsProps {
   minimize?: boolean
   maximize?: boolean
   close?: boolean
+  floating?: boolean
 }
 
-export function WindowControls({ minimize = true, maximize = true, close = true }: WindowControlsProps) {
+export function WindowControls({
+  minimize = true,
+  maximize = true,
+  close = true,
+  floating = true,
+}: WindowControlsProps) {
   async function toggleMaximize() {
     if (await BrowserWindowApi.isMaximized()) {
       BrowserWindowApi.unmaximize()
@@ -18,34 +106,34 @@ export function WindowControls({ minimize = true, maximize = true, close = true 
     }
   }
   return (
-    <div className="window-controls">
+    <Root $floating={floating}>
       {minimize && (
-        <button
+        <ControlButton
           onClick={() => BrowserWindowApi.minimize()}
-          className="minimize"
+          $variant="minimize"
           title="Minimize"
         >
           <Minus />
-        </button>
+        </ControlButton>
       )}
       {maximize && (
-        <button
+        <ControlButton
           onClick={toggleMaximize}
-          className="maximize"
+          $variant="maximize"
           title="Maximize"
         >
           <Square />
-        </button>
+        </ControlButton>
       )}
       {close && (
-        <button
+        <ControlButton
           onClick={() => BrowserWindowApi.close()}
-          className="close"
+          $variant="close"
           title="Close"
         >
           <X />
-        </button>
+        </ControlButton>
       )}
-    </div>
+    </Root>
   )
 }

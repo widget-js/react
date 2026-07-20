@@ -1,7 +1,7 @@
 import type {
+  AppTheme,
   BroadcastEvent,
   WidgetParams,
-  WidgetTheme,
 } from '@widget-js/core'
 import type {
   UseDefaultOverlapContextMenuOption,
@@ -44,7 +44,7 @@ export interface SaveOptions {
 
 export interface UseWidgetReturn {
   widgetParams: WidgetParams
-  widgetTheme: WidgetTheme
+  widgetTheme: AppTheme
   dataLoaded: boolean
   setDataLoaded: (loaded: boolean) => void
   language: string

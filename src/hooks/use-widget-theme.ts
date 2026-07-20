@@ -1,47 +1,96 @@
-import { AppApi, DefaultWidgetTheme, WidgetTheme } from '@widget-js/core'
+import { AppApi, AppTheme } from '@widget-js/core'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useWidgetParams } from './use-widget-params'
 
+function readWidgetThemeStorage(key: string, defaultTheme: AppTheme) {
+  if (typeof window === 'undefined') {
+    return defaultTheme
+  }
+
+  try {
+    const item = window.localStorage.getItem(key)
+    return item ? AppTheme.fromJSON(item) : defaultTheme
+  }
+  catch {
+    return defaultTheme
+  }
+}
+
 // Helper to manage widget theme storage with custom serialization
-function useWidgetThemeStorage(id: string | undefined, defaultTheme: WidgetTheme) {
+function useWidgetThemeStorage(id: string | undefined, defaultTheme: AppTheme) {
   const key = `widget-theme/${id}`
-  const [theme, setTheme] = useState<WidgetTheme>(() => {
-    if (typeof window === 'undefined') { return defaultTheme }
-    try {
-      const item = window.localStorage.getItem(key)
-      return item ? WidgetTheme.fromJSON(item) : defaultTheme
-    }
-    catch (e) {
-      return defaultTheme
-    }
-  })
+  const lastStorageValueRef = useRef<string | null>(null)
+  const [theme, setTheme] = useState<AppTheme>(() => readWidgetThemeStorage(key, defaultTheme))
 
   useEffect(() => {
     if (!id) { return }
     try {
-      window.localStorage.setItem(key, JSON.stringify(theme))
+      const nextValue = JSON.stringify(theme)
+      if (window.localStorage.getItem(key) !== nextValue) {
+        window.localStorage.setItem(key, nextValue)
+      }
+      lastStorageValueRef.current = nextValue
     }
     catch (e) {
       console.warn(`Error setting localStorage key “${key}”:`, e)
     }
   }, [key, theme, id])
 
+  useEffect(() => {
+    if (!id || typeof window === 'undefined') {
+      return
+    }
+
+    const syncThemeFromStorage = () => {
+      const rawValue = window.localStorage.getItem(key)
+      if (rawValue === lastStorageValueRef.current) {
+        return
+      }
+
+      lastStorageValueRef.current = rawValue
+
+      try {
+        setTheme(rawValue ? AppTheme.fromJSON(rawValue) : defaultTheme)
+      }
+      catch (e) {
+        console.warn(`Error reading localStorage key “${key}”:`, e)
+        setTheme(defaultTheme)
+      }
+    }
+
+    syncThemeFromStorage()
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.storageArea !== window.localStorage) { return }
+      if (event.key !== null && event.key !== key) { return }
+      syncThemeFromStorage()
+    }
+
+    window.addEventListener('storage', handleStorage)
+    const intervalId = window.setInterval(syncThemeFromStorage, 250)
+
+    return () => {
+      window.removeEventListener('storage', handleStorage)
+      window.clearInterval(intervalId)
+    }
+  }, [defaultTheme, id, key])
+
   return [theme, setTheme] as const
 }
 
 export interface UseWidgetThemeReturn {
-  widgetTheme: WidgetTheme
-  setWidgetTheme: (theme: WidgetTheme) => void
+  widgetTheme: AppTheme
+  setWidgetTheme: (theme: AppTheme) => void
   useGlobalTheme: () => Promise<void>
 }
 
 export interface UseWidgetThemeOptions {
-  defaultTheme?: WidgetTheme
+  defaultTheme?: AppTheme
   /**
    * 是否立即注入主题
    */
   immediate?: boolean
-  onThemeChanged?: (newValue: WidgetTheme) => void
+  onThemeChanged?: (newValue: AppTheme) => void
 }
 
 export function useWidgetTheme(options?: UseWidgetThemeOptions): UseWidgetThemeReturn {
@@ -50,7 +99,7 @@ export function useWidgetTheme(options?: UseWidgetThemeOptions): UseWidgetThemeR
   const immediate = options?.immediate ?? true
   const [widgetTheme, setWidgetTheme] = useWidgetThemeStorage(
     id,
-    options?.defaultTheme ?? DefaultWidgetTheme,
+    options?.defaultTheme ?? new AppTheme(),
   )
   const optionsRef = useRef(options)
 
@@ -75,7 +124,7 @@ export function useWidgetTheme(options?: UseWidgetThemeOptions): UseWidgetThemeR
 
   const useGlobalTheme = useCallback(async () => {
     const globalTheme = await AppApi.getThemeCSS()
-    setWidgetTheme(WidgetTheme.fromCSS(globalTheme))
+    setWidgetTheme(AppTheme.fromCSS(globalTheme))
   }, [setWidgetTheme])
 
   // Initial mount logic
