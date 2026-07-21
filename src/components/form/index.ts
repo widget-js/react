@@ -1,5 +1,6 @@
 export * from './widget-bind-shortcut-field'
 export * from './widget-checkbox-field'
+export * from './widget-code-editor'
 export * from './widget-color-field'
 export * from './widget-font-selector'
 export * from './widget-pixel-slider-field'

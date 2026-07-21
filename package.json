@@ -1,7 +1,7 @@
 {
   "name": "@widget-js/react",
   "private": false,
-  "version": "26.7.20",
+  "version": "26.7.21",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -48,6 +48,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/geist": "^5.2.8",
+    "@monaco-editor/react": "^4.7.0",
     "@supabase/supabase-js": "^2.84.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@widget-js/core": "26.7.15",
@@ -55,6 +56,7 @@
     "clsx": "^2.1.1",
     "consola": "^3.4.2",
     "lucide-react": "^0.577.0",
+    "monaco-editor": "^0.56.0",
     "popmotion": "^11.0.5",
     "radix-ui": "^1.4.3",
     "semver": "^7.7.4",

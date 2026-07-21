@@ -1,3 +1,4 @@
+import type { WidgetThemeOption } from '@widget-js/react'
 import { useWidget, useWidgetStorage, useWidgetTheme, WidgetThemeForm, Window } from '@widget-js/react'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,10 +11,11 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-const clockThemeOption = {
+const clockThemeOption: WidgetThemeOption = {
   useGlobalTheme: true,
   borderRadius: true,
   backgroundColor: true,
+  backgroundBorderColor: true,
   primaryColor: true,
   color: true,
 } as const
