@@ -38,6 +38,8 @@ const config: StorybookConfig = {
     })
 
     merged.plugins = [tailwindcss(), ...(merged.plugins ?? [])]
+    // Storybook should not run library declaration generation from the root Vite config.
+    merged.plugins = merged.plugins.filter(plugin => plugin?.name !== 'vite:dts')
     return merged
   },
 }
