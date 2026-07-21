@@ -12,6 +12,14 @@ yarn add @widget-js/react @widget-js/core
 pnpm add @widget-js/react @widget-js/core
 ```
 
+## Styles
+
+Import the built-in CSS once in your app entry (e.g. `main.tsx`):
+
+```ts
+import '@widget-js/react/style.css'
+```
+
 ## Features
 
 - **Window Management**: Control window size, position, and animations easily.
@@ -20,129 +28,42 @@ pnpm add @widget-js/react @widget-js/core
 - **Event Handling**: Simplified hooks for keyboard, mouse, and IPC events.
 - **UI Components**: Ready-to-use components like `WindowControls`.
 
-## Usage
+## Tech Stack
 
-### Components
+- Tailwind CSS
+- shadcn/ui
 
-#### WindowControls
+## Storybook
 
-A pre-built component for window control buttons (close, minimize, etc.).
+Preview: https://widget-js.github.io/react/
 
-```tsx
-import { WindowControls } from '@widget-js/react'
-import '@widget-js/react/style.css' // Import styles
+## AI Skills
 
-function App() {
-  return (
-    <div className="relative">
-      <WindowControls />
-      <div className="p-4">
-        <h1>My Widget</h1>
-      </div>
-    </div>
-  )
-}
+### Install These Skills
+
+```shell
+npx skills@latest add widget-js/react
 ```
 
-### Hooks
+### Included Skills
 
-#### useWidget
+- `widget-react-components`: Helps AI choose and reuse existing components in `src/components`.
+- `widget-react-hooks`: Helps AI choose and combine existing hooks in `src/hooks`.
 
-Access the current widget instance to perform core operations.
+### Repository Layout
 
-```tsx
-import { useWidget } from '@widget-js/react'
-
-function MyComponent() {
-  const widget = useWidget()
-
-  const refreshWidget = () => {
-    widget?.reload()
-  }
-
-  return <button onClick={refreshWidget}>Reload</button>
-}
+```text
+skills/
+  widget-react-components/
+    SKILL.md
+  widget-react-hooks/
+    SKILL.md
 ```
 
-#### useWindowAnimation
+### Notes
 
-Animate the widget window position with spring physics or easing functions.
-
-```tsx
-import { useWindowAnimationY } from '@widget-js/react'
-
-function AnimatedComponent() {
-  const { animate, isPlaying } = useWindowAnimationY({
-    spring: { stiffness: 100, damping: 20 },
-    onComplete: () => console.log('Animation complete'),
-  })
-
-  return (
-    <button onClick={() => animate(200)} disabled={isPlaying}>
-      Move to Y=200
-    </button>
-  )
-}
-```
-
-#### useIpcListener
-
-Listen for Inter-Process Communication (IPC) messages from the main process.
-
-```tsx
-import { useIpcListener } from '@widget-js/react'
-
-function ListenerComponent() {
-  useIpcListener('custom-event', (event, data) => {
-    console.log('Received data:', data)
-  })
-
-  return <div>Listening for events...</div>
-}
-```
-
-#### useWidgetStorage
-
-Persist data easily using the widget's storage system.
-
-```tsx
-import { useWidgetStorage } from '@widget-js/react'
-
-function StorageComponent() {
-  const [value, setValue] = useWidgetStorage('my-key', 'default-value')
-
-  return (
-    <input
-      value={value}
-      onChange={e => setValue(e.target.value)}
-    />
-  )
-}
-```
-
-## API Reference
-
-### Hooks
-
-| Hook | Description |
-|------|-------------|
-| `useWidget` | Get the current widget instance. |
-| `useWidgetParams` | Access widget URL parameters. |
-| `useWidgetStorage` | Persist state in widget storage. |
-| `useWindowSize` | Get or set window size. |
-| `useWindowAnimation` | Animate window position (X or Y). |
-| `useAutoHideOnEdge` | Automatically hide window when moving to screen edge. |
-| `useTray` | Manage system tray icon and menu. |
-| `useNotification` | Send system notifications. |
-| `useIpcListener` | Listen for IPC messages. |
-| `useShortcutListener` | Listen for global shortcuts. |
-| `useKeyboardEvent` | Listen for keyboard events. |
-| `useMouseEvent` | Listen for mouse events. |
-
-### Components
-
-- **WindowControls**: Standard window control buttons.
-- **Button**: Styled button component.
+- Each skill must stay in its own folder and must contain a `SKILL.md` file.
+- Keep the skill name and directory name stable so the `skills` CLI can discover them correctly.
 
 ## License
 
