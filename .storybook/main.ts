@@ -6,6 +6,13 @@ import { mergeConfig } from 'vite'
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 const projectRoot = path.resolve(dirname, '..')
+const storybookBasePath = process.env.STORYBOOK_BASE_PATH?.trim()
+
+function normalizeBasePath(basePath?: string) {
+  if (!basePath) { return undefined }
+
+  return basePath.endsWith('/') ? basePath : `${basePath}/`
+}
 
 const config: StorybookConfig = {
   stories: [
@@ -22,6 +29,7 @@ const config: StorybookConfig = {
   framework: '@storybook/react-vite',
   viteFinal: async (viteConfig) => {
     const merged = mergeConfig(viteConfig, {
+      base: normalizeBasePath(storybookBasePath),
       resolve: {
         alias: {
           '@': path.resolve(projectRoot, './src'),
