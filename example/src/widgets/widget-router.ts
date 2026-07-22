@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router-dom'
-import ClockWidget from './clock/Clock.widget'
-import ClockWidgetRoutes from './clock/ClockWidgetRoutes'
+import ClockWidgetRoutes from './clock/clock-widget-routes'
+import ClockWidget from './clock/clock.widget'
 
 export const widgets = [
   ClockWidget,

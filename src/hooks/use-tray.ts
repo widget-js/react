@@ -1,5 +1,5 @@
 import type { WidgetMenuItem } from '@widget-js/core'
-import { BrowserWindowApi, Channel, TrayApi, TrayApiEvent } from '@widget-js/core'
+import { BrowserWindowApi, Channel, TrayApi } from '@widget-js/core'
 import { useEffect } from 'react'
 import { useIpcListener } from './use-ipc-listener'
 
@@ -41,7 +41,7 @@ export function useTray(options: UseTrayOptions) {
 
   useIpcListener(Channel.TRAY, (event: any) => {
     switch (event) {
-      case TrayApiEvent.CLICK:
+      case TrayApi.EVENT_CLICK:
         if (onClick) {
           onClick()
         }
@@ -49,16 +49,16 @@ export function useTray(options: UseTrayOptions) {
           BrowserWindowApi.show()
         }
         break
-      case TrayApiEvent.RIGHT_CLICK:
+      case TrayApi.EVENT_RIGHT_CLICK:
         onRightClick?.()
         break
-      case TrayApiEvent.MIDDLE_CLICK:
+      case TrayApi.EVENT_MIDDLE_CLICK:
         onMiddleClick?.()
         break
-      case TrayApiEvent.MOUSE_ENTER:
+      case TrayApi.EVENT_MOUSE_ENTER:
         onMouseEnter?.()
         break
-      case TrayApiEvent.MOUSE_LEAVE:
+      case TrayApi.EVENT_MOUSE_LEAVE:
         onMouseLeave?.()
         break
     }

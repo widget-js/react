@@ -87,3 +87,21 @@ export const LongContent: Story = {
     ),
   },
 }
+
+export const FillViewport: Story = {
+  render: args => (
+    <div className="h-screen w-screen">
+      <Window {...args} />
+    </div>
+  ),
+  args: {
+    title: 'Fullscreen Workspace',
+    children: <DemoContent count={8} />,
+    footer: (
+      <div className="flex flex-wrap justify-end gap-3">
+        <Button type="button" variant="outline">Dismiss</Button>
+        <Button type="button">Continue</Button>
+      </div>
+    ),
+  },
+}

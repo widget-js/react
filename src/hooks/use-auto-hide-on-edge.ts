@@ -4,7 +4,7 @@ import type {
   EasingFunction,
   UseWindowAnimationOptions,
 } from './use-window-animation'
-import { BrowserWindowApi, Channel, DeviceApi, MouseApi, MouseApiEvent } from '@widget-js/core'
+import { BrowserWindowApi, Channel, DeviceApi, MouseApi } from '@widget-js/core'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useIpcListener } from './use-ipc-listener'
 import { useWidgetStorage } from './use-widget-storage'
@@ -233,7 +233,7 @@ export function useAutoHideOnEdge(options: UseAutoHideOnEdgeOptions): UseAutoHid
 
   // Use refs in callback to avoid frequent re-binding
   const handleIpcMouse = useCallback((event: any) => {
-    if (event === MouseApiEvent.HOTSPOT_ACTIVE) {
+    if (event === MouseApi.EVENT_HOTSPOT_ACTIVE) {
       if (!isShowedRef.current && !animatingRef.current && isAutoHideRef.current && Date.now() - latestHideAt.current > 500) {
         showWindow()
       }

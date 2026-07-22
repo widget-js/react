@@ -9,9 +9,9 @@ import type {
 import type { UseWidgetParamsOptions } from './use-widget-params'
 import type { UseWidgetThemeOptions } from './use-widget-theme'
 import {
-  AppApiEvent,
+  AppApi,
   DeployMode,
-  WidgetApiEvent,
+  WidgetApi,
 } from '@widget-js/core'
 import consola from 'consola'
 import { useEffect, useState } from 'react'
@@ -75,16 +75,16 @@ export function useWidget(options?: UseWidgetOptions): UseWidgetReturn {
   )
 
   const events = options?.useBroadcastEvent ?? []
-  if (!events.includes(WidgetApiEvent.DATA_CHANGED)) {
-    events.push(WidgetApiEvent.DATA_CHANGED)
+  if (!events.includes(WidgetApi.EVENT_DATA_CHANGED)) {
+    events.push(WidgetApi.EVENT_DATA_CHANGED)
   }
 
-  if (!events.includes(AppApiEvent.LANGUAGE_CHANGED)) {
-    events.push(AppApiEvent.LANGUAGE_CHANGED)
+  if (!events.includes(AppApi.EVENT_LANGUAGE_CHANGED)) {
+    events.push(AppApi.EVENT_LANGUAGE_CHANGED)
   }
 
   useAppBroadcast(events, (broadcastEvent) => {
-    if (broadcastEvent.event === AppApiEvent.LANGUAGE_CHANGED) {
+    if (broadcastEvent.event === AppApi.EVENT_LANGUAGE_CHANGED) {
       setLanguage(broadcastEvent.payload as string)
     }
     options?.onBroadcastEvent?.(broadcastEvent)

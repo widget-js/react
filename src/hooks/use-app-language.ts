@@ -1,4 +1,4 @@
-import { AppApi, AppApiEvent } from '@widget-js/core'
+import { AppApi } from '@widget-js/core'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAppBroadcast } from './use-app-broadcast'
 
@@ -32,7 +32,7 @@ export function useAppLanguage(options: UseAppLanguageOption = {}) {
   }, [])
 
   const handleBroadcast = useCallback((event: any) => {
-    if (event.event === AppApiEvent.LANGUAGE_CHANGED) {
+    if (event.event === AppApi.EVENT_LANGUAGE_CHANGED) {
       const payload = event.payload
       if (typeof payload === 'string' && languageCodeRef.current !== payload) {
         languageCodeRef.current = payload
@@ -42,7 +42,7 @@ export function useAppLanguage(options: UseAppLanguageOption = {}) {
     }
   }, [])
 
-  useAppBroadcast([AppApiEvent.LANGUAGE_CHANGED], handleBroadcast)
+  useAppBroadcast([AppApi.EVENT_LANGUAGE_CHANGED], handleBroadcast)
 
   return languageCode
 }

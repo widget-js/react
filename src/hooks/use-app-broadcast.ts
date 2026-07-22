@@ -1,4 +1,4 @@
-import type { BroadcastEvent, BroadcastEventType } from '@widget-js/core'
+import type { BroadcastEvent } from '@widget-js/core'
 import { BroadcastApi, Channel } from '@widget-js/core'
 import { useCallback, useEffect } from 'react'
 import { useIpcListener } from './use-ipc-listener'
@@ -8,7 +8,7 @@ import { useIpcListener } from './use-ipc-listener'
  * @param events    广播事件类型
  * @param callback
  */
-export function useAppBroadcast(events: BroadcastEventType[], callback: (event: BroadcastEvent) => void) {
+export function useAppBroadcast(events: string[], callback: (event: BroadcastEvent) => void) {
   useEffect(() => {
     BroadcastApi.register(...events)
     return () => {

@@ -1,13 +1,13 @@
 import type { RouteObject } from 'react-router-dom'
 import { createElement } from 'react'
-import ClockWidget from './Clock.widget'
-import ClockConfigView from './ClockConfigView'
-import ClockWidgetView from './ClockWidgetView'
+import ClockConfigView from './clock-config-view'
+import ClockWidgetView from './clock-widget-view'
+import ClockWidget from './clock.widget'
 
 const path = ClockWidget.path
 const name = ClockWidget.name
 
-const configPagePath = ClockWidget.configPagePath!.split('?')[0]!
+const configPagePath = ClockWidget.configPage!.path
 
 const ClockWidgetRoutes: RouteObject[] = [
   {

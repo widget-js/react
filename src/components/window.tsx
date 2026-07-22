@@ -10,7 +10,7 @@ export interface WindowProps {
 export function Window({ title, children, footer }: WindowProps) {
   return (
     <main className="h-screen overflow-hidden bg-background text-foreground">
-      <section className="mx-auto flex h-full w-full max-w-6xl flex-col">
+      <section className="mx-auto flex h-full w-full flex-col">
         <WindowTitleBar title={title} className="shrink-0" />
 
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">

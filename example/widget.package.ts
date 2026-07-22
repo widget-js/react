@@ -6,6 +6,7 @@ export default new WidgetPackage({
   description: {
     'zh-CN': '修改成你的组件描述',
   },
+  requiredAppVersion: '26.7.22',
   entry: '/',
   hash: true,
   remote: {

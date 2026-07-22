@@ -1,6 +1,6 @@
 import type { BroadcastEvent } from '@widget-js/core'
 import type { ReactNode } from 'react'
-import { BrowserWindowApiEvent, DeployMode, WidgetApiEvent } from '@widget-js/core'
+import { BrowserWindowApi, DeployMode, WidgetApi } from '@widget-js/core'
 import { useMemo, useState } from 'react'
 import { WidgetBackground } from '@/components/widget-background'
 import { WidgetOverlapDragButton } from '@/components/widget-overlap-drag-button'
@@ -22,12 +22,12 @@ export function WidgetWrapper(props: WidgetWrapperProps) {
 
   const desktopEvents = useMemo(() => {
     return isDesktop
-      ? [WidgetApiEvent.EDIT_DESKTOP_WIDGETS, BrowserWindowApiEvent.BLUR]
+      ? [WidgetApi.EVENT_EDIT_DESKTOP_WIDGETS, BrowserWindowApi.EVENT_BLUR]
       : []
   }, [isDesktop])
 
   useAppBroadcast(desktopEvents, async (broadcastEvent: BroadcastEvent) => {
-    if (broadcastEvent.event === WidgetApiEvent.EDIT_DESKTOP_WIDGETS) {
+    if (broadcastEvent.event === WidgetApi.EVENT_EDIT_DESKTOP_WIDGETS) {
       setEditing(!!broadcastEvent.payload)
     }
   })

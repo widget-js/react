@@ -1,5 +1,5 @@
 import type { WidgetThemeOption } from '@widget-js/react'
-import { useWidget, useWidgetStorage, useWidgetTheme, WidgetThemeForm, Window } from '@widget-js/react'
+import { useWidgetStorage, useWidgetTheme, WidgetThemeForm, Window } from '@widget-js/react'
 import { Button } from '@/components/ui/button'
 import {
   Field,
@@ -21,7 +21,6 @@ const clockThemeOption: WidgetThemeOption = {
 } as const
 
 export default function ClockConfigView() {
-  const { save } = useWidget()
   const { widgetTheme, setWidgetTheme } = useWidgetTheme()
   const [title, setTitle] = useWidgetStorage('title', 'Clock')
   const [use24Hour, setUse24Hour] = useWidgetStorage('use-24-hour', true)
@@ -32,10 +31,10 @@ export default function ClockConfigView() {
       title={title}
       footer={(
         <div className="flex flex-wrap justify-end gap-3">
-          <Button type="button" variant="outline" onClick={() => save()}>
+          <Button type="button" variant="outline" onClick={() => window.close()}>
             应用
           </Button>
-          <Button type="button" onClick={() => save({ closeWindow: true })}>
+          <Button type="button" onClick={() => window.close()}>
             保存并关闭
           </Button>
         </div>

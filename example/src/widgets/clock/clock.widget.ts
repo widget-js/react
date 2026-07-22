@@ -15,7 +15,16 @@ const ClockWidget = new Widget({
   maxHeight: 6,
   previewImage: '/preview_clock.png',
   path: '/widget/clock',
-  configPagePath: '/widget/config/clock?frame=true&transparent=false&width=700&height=800',
+  configPage: {
+    path: '/widget/config/clock',
+    frame: true,
+    transparent: false,
+    width: 700,
+    height: 800,
+    resizable: true,
+    maximizable: true,
+    alwaysOnTop: false,
+  },
 })
 
 export default ClockWidget

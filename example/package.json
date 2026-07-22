@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
-    "@widget-js/core": "latest",
-    "@widget-js/react": "latest",
+    "@widget-js/core": "^26.7.24",
+    "@widget-js/react": "^26.7.23",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.25.0",
@@ -33,8 +33,8 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
-    "@widget-js/cli": "24.1.1-beta.72",
-    "@widget-js/vite-plugin-widget": "24.1.1-beta.72",
+    "@widget-js/cli": "^26.7.22",
+    "@widget-js/vite-plugin-widget": "^26.7.25",
     "tailwindcss": "^4.3.3",
     "typescript": "latest",
     "vite": "latest"

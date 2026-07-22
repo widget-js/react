@@ -107,7 +107,7 @@ export function useWindowAnimationY(options: UseWindowAnimationOptions) {
             y: latest,
             width: previousBounds.current.width,
             height: previousBounds.current.height,
-          })
+          }, false)
         },
       })
     },
@@ -157,7 +157,7 @@ export function useWindowAnimationX(options: UseWindowAnimationOptions) {
             y: previousBounds.current.y,
             width: previousBounds.current.width,
             height: previousBounds.current.height,
-          })
+          }, false)
         },
       })
     },

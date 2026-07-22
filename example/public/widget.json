@@ -47,8 +47,16 @@
       "backgroundThrottling": true,
       "previewImage": "/preview_clock.png",
       "supportDeployMode": 17,
-      "configPagePath": "/widget/config/clock?frame=true&transparent=false&width=600&height=700",
-      "routes": []
+      "configPage": {
+        "path": "/widget/config/clock",
+        "frame": true,
+        "transparent": false,
+        "width": 700,
+        "height": 800,
+        "resizable": true,
+        "maximizable": true,
+        "alwaysOnTop": false
+      }
     }
   ],
   "pages": []
