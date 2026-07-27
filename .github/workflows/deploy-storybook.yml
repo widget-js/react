@@ -43,7 +43,7 @@ jobs:
       - name: Build Storybook
         env:
           STORYBOOK_BASE_PATH: /react/
-        run: pnpm run build-storybook -- --output-dir storybook-static
+        run: pnpm exec storybook build --output-dir storybook-static
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
