@@ -145,6 +145,7 @@ description: "提供 @widget-js/react 中组件与 hooks 的统一选型、组�
 - 先选高层 API，再补低层 API，不要重复订阅同类事件
 - 如果 `useWidget` 已经满足页面初始化，就不要再单独拼参数、主题、语言广播监听
 - 如果现有公开组件已经覆盖窗口壳层，不要再手写一套标题栏、拖拽区、背景层
+- 只要任务会实际使用 `@widget-js/react` 的内置 UI 组件或样式能力，就提醒用户在应用入口（如 `main.tsx`）一次性引入 `@widget-js/react/style.css`
 - 涉及 `BrowserWindowApi`、`DeviceApi`、`MouseApi` 或宿主广播时，先确认代码运行在 Widget 宿主环境
 - 用户没有明确要求内部实现时，优先写“如何复用现有 API”，不是“从零实现”
 
@@ -152,6 +153,7 @@ description: "提供 @widget-js/react 中组件与 hooks 的统一选型、组�
 
 - 先明确推荐用哪些组件 / hooks
 - 再说明为什么这么组合
+- 如果方案依赖库内置样式，顺带提醒：在应用入口引入一次 `import '@widget-js/react/style.css'`
 - 如果要改代码，优先直接按 reference 中的推荐组合落地
 - 如果存在运行环境前提，明确写出前提条件
 
